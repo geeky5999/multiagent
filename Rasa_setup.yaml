@@ -1,0 +1,58 @@
+#rasa setup
+version: "2.0"
+intents:
+  - greet
+  - ask_order_status
+  - ask_return_policy
+
+entities:
+  - order_id
+
+responses:
+  utter_greet:
+    - text: "Hello! How can I help you today?"
+
+  utter_ask_order_status:
+    - text: "Please provide your order ID."
+
+  utter_return_policy:
+    - text: "You can return your product within 30 days of purchase."
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+  #defining intents 
+  version: "2.0"
+nlu:
+- intent: greet
+  examples: |
+    - hi
+    - hello
+    - good morning
+
+- intent: ask_order_status
+  examples: |
+    - What's the status of my order?
+    - Can you check my order?
+
+- intent: ask_return_policy
+  examples: |
+    - What's your return policy?
+    - Can I return my product?
+    #defining rules 
+    version: "2.0"
+rules:
+- rule: Greet
+  steps:
+  - intent: greet
+  - action: utter_greet
+
+stories.yml:
+```yaml
+version: "2.0"
+stories:
+- story: order status check
+  steps:
+  - intent: ask_order_status
+  - action: utter_ask_order_status
+  
